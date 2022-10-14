@@ -1,0 +1,16 @@
+{
+    "name": "user/pdc10-classes",
+    "autoload": {
+        "psr-4": {"Models\\": "models/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Arnold Lim",
+            "email": "lim.arnoldnicholas@auf.edu.ph"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}

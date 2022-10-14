@@ -1,0 +1,58 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>180</x><y>460</y><w>270</w><h>230</h></coordinates><panel_attributes>Teacher 
+--
+-id: int
+-first_name: string
+-last_name: string
+-email: string
+-contact: int
++employee_number: int
+--
+#get_id(): int
++get_name(): string
++get_email(): string
++get_contact(): int
++update_teacher_information(): string
++remove_teacher(): string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>150</y><w>270</w><h>200</h></coordinates><panel_attributes>Class
+--
+-id: int
++name: string
++code: int
++description: string
+-teacher_id: int
+--
+#get_id(): int
++get_name(): string
++update_class(): string
++remove_class(): string
++assign_teacher(): string
+#get_teacher_id(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>110</y><w>210</w><h>260</h></coordinates><panel_attributes>Student
+--
+-id: int
+-first_name: string
+-last_name: string
++student_number: int
++email: string
+-contact: int
++program: string
+--
+#get_id(): int
++get_name(): string
++get_email(): string
++get_contact(): int
++add_student(): string
++update_student_information(): string
++remove_student(): string
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>490</y><w>270</w><h>120</h></coordinates><panel_attributes>Class Roster
+--
++class_code: int
++student_number: int
++enrolled_at: string
+--
++update_class_roster(): string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>240</y><w>220</w><h>270</h></coordinates><panel_attributes></panel_attributes><additional_attributes>200;250;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>340</y><w>50</w><h>140</h></coordinates><panel_attributes>lt=-
+
+m1=0..1</panel_attributes><additional_attributes>10;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>360</y><w>50</w><h>150</h></coordinates><panel_attributes>lt=-
+m2=0..1
+</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element></diagram>
