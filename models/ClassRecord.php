@@ -5,11 +5,11 @@ use \PDO;
 
 class ClassRecord	
 {
-    public $id;
-	public $class_name;
-    public $code;
-    public $descrip;
-    public $teacher_id;
+    protected $id;
+	protected $class_name;
+    protected $code;
+    protected $descrip;
+    protected $teacher_id;
 
 	// Database Connection Object
 	protected $connection;
@@ -129,7 +129,7 @@ class ClassRecord
 		}
 	}
 
-	public function getAll()
+	public function showAllClasses()
 	{
 		try {
 			$sql = 'SELECT * FROM classes';

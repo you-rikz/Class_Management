@@ -151,7 +151,7 @@ class Student
 		}
 	}
 
-	public function getAll()
+	public function showAllStudents()
 	{
 		try {
 			$sql = 'SELECT * FROM students';
