@@ -6,22 +6,23 @@ use \PDO;
 class Teacher
 {
     public $id;
-	public $firstName;
-	public $lastName;
+	public $first_name;
+	public $last_name;
     public $email;
     public $contact;
-    public $employeeNumber;
+    public $employee_number;
 
 	// Database Connection Object
 	protected $connection;
 
-    public function __construct($firstName, $lastName, $email, $contact, $employeeNumber)
+    public function __construct($first_name, $last_name, $email, $contact, $employee_number)
 	{
-		$this->first_name = $firstName;
-        $this->last_name = $lastName;
+		$this->first_name = $first_name;
+        $this->last_name = $last_name;
         $this->email = $email;
         $this->contact = $contact;
-        $this->employee_number = $employeeNumber;
+        $this->employee_number = $employee_number;
+        
 	}
 
 	public function getID()
@@ -38,7 +39,6 @@ class Teacher
 	{
 		return $this->last_name;
 	}
-
 
     public function getEmail()
 	{
@@ -63,18 +63,16 @@ class Teacher
 	public function addTeacher()
 	{
 		try {
-			$sql = "INSERT INTO teachers SET first_name=:first_name, last_name=:last_name, employee_number=:employee_number, email=:email, contact=:contact";
+			$sql = "INSERT INTO teachers SET first_name=:first_name, last_name=:last_name, email=:email, contact=:contact, employee_number=:employee_number";
 			$statement = $this->connection->prepare($sql);
-			$statement->execute([
+			return $statement->execute([
 				':first_name' => $this->getFirstName(),
 				':last_name' => $this->getLastName(),
                 ':email' => $this->getEmail(),
                 ':contact' => $this->getContact(),
-				':employee_number' => $this->getEmployeeNumber(),
-                
+                ':employee_number' => $this->getEmployeeNumber(),
+
 			]);
-			$this->id = $this->connection->getID();
-			return $this;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
@@ -97,32 +95,27 @@ class Teacher
 			$this->last_name = $row['last_name'];
             $this->email = $row['email'];
             $this->contact = $row['contact'];
-			$this->employee_number = $row['employee_number'];
-
+            $this->employee_number = $row['employee_number'];
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
 
-	public function update($firstName, $lastName, $employeeNumber, $email, $contact)
+	public function update($first_name, $last_name, $email, $contact, $employee_number)
 	{
 		try {
-			$sql = 'UPDATE teachers SET first_name=?, last_name=?,employee_number=?, email=?, $contact=?, WHERE id=?';
+			$sql = 'UPDATE teachers SET first_name=?, last_name=?, email=?, contact=?, employee_number=? WHERE id=?';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
-				$firstName,
-				$lastName,
+				$first_name,
+				$last_name,
                 $email,
                 $contact,
-				$employeeNumber,
+                $employee_number,
 				$this->getID()
 			]);
-			$this->first_name = $firstName;
-			$this->last_name = $lastName;
-            $this->email = $email;
-            $this->contact = $contact;
-			$this->employee_number = $employeeNumber;
+			
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

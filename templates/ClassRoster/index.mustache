@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Class Rosters</title>
+    <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+</head>
+<body>
+
+       <nav>
+      <ul>
+        <li>
+          <a href="#" class="logo">
+            <img src="https://www.auf.edu.ph/images/auf-logo.png" alt="">
+            <span class="nav-item">Class Management</span>
+          </a>
+        </li>
+        <li><a href="../classes/index.php">
+          <i class="fas fa-school"></i>
+          <span class="nav-item">Class Record Management</span>
+        </a></li>
+        <li><a href="../teachers/index.php">
+          <i class="fas fa-person"></i>
+          <span class="nav-item">Teachers</span>
+        </a></li>
+        <li><a href="../students/index.php">
+          <i class="fas fa-medal"></i>
+          <span class="nav-item">Students</span>
+        </a></li>
+        <li><a href="../class_roster/index.php">
+          <i class="fas fa-computer"></i>
+          <span class="nav-item">Class Rosters</span>
+        </a></li>
+      
+      </ul>
+    </nav>
+    
+
+    <div class="main-panel">
+        <div class="content-wrapper pb-0">
+          <div class="page-header flex-wrap">
+            <h3 class="mb-0" style="margin-left:20px"> Class Records
+            </h3>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="d-flex">
+                <a type="button" style="width: 100px; font-size: 12px" class="btn btn-sm ml-3 btn-success" a href="../class_roster/add.php"> Add Class </a>
+              </div>
+            <div class="card-body">
+                <h4 class="card-title">Class Rosters</h4>
+    <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Class Code</th>
+            <th scope="col">Assigned Teacher</th>
+            <th scope="col">Enrolled Students</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        {{# all_classes}}
+        <tbody>
+          <tr>
+            <th scope="row">{{id}}</th>
+            <td>{{ code }}</td>
+            <td>{{ first_name }} {{ last_name }}</td>
+            <td></td>
+            <td width="20%">
+                <a href="../class_roster/edit.php?id={{id}}" class="btn btn-info" style="width: 100px">Edit</a>
+                <a href="../class_roster/delete.php?id={{id}}" class="btn btn-danger"  style="width: 100px">Remove</a>
+            </td>
+          </tr>
+        </tbody>
+        {{/ all_classes}}
+      </table>
+    </div>
+ </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<style>
+.card{
+    padding-top: 20px;
+    box-shadow: 0 10px 20px black;
+}
+    .d-flex{
+        margin-left:88%;
+        top:20px;
+        position:absolute;
+        
+    }
+
+    .btn-success{
+      display:flex;
+        align-content: center;
+        justify-content: center;
+    }
+.flex-wrap{
+    padding-top: 5%;
+    padding-left: 20%;
+    padding-right: 10%;
+
+}
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif; 
+}
+
+body{
+  background: linear-gradient(-45deg, #fff5b9, #dac480) fixed;
+}
+
+nav{
+  position: absolute;
+  top: 0;
+  bottom:0;
+  height:100%;
+  left: 0;
+  background: linear-gradient(-45deg, #4474c4, #e4e2d3 );
+  width:90px;
+  overflow: hidden;
+  transition: width 0.2s linear;
+  box-shadow: 0 30px 20px black;
+}
+.logo {
+  text-align: center;
+  display: flex;
+  transition: all 0.5s ease;
+  margin: 10px 0 0 10px;
+}
+
+.logo img{
+  width: 45px;
+  height: 70px;
+}
+
+.logo span{
+  font-weight: bold;
+  padding-left: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+a{
+  position:relative;
+  color: rgb(85,83,83,);
+  font-size: 17px;
+  display: table;
+  width: 320px;
+  padding: 10px;
+  color: #2d3336;
+}
+
+.fas{
+  position: relative;
+  width: 70px;
+  height: 40px;
+  top:14px;
+  font-size: 20px;
+  text-align: center;
+  color: #022c5e;
+}
+.nav-item{
+  position:relative;
+  top: 12px;
+  margin-left:10px;
+  
+}
+
+a:hover{
+  background: #eee;
+  text-decoration: none;
+
+}
+
+nav:hover{
+  width: 320px;
+  transition: all 0.5s ease;
+  text-decoration: none;
+}
+
+</style>
+
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

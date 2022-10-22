@@ -5,7 +5,8 @@ use Models\Teacher;
 
 $teacher= new Teacher('', '', '', '', '', '');
 $teacher->setConnection($connection);
-$all_teachers = $teacher->addTeacher();
-var_dump($all_teachers);
+$all_teachers = $teacher->showAllTeachers();
 
-?>
+
+ $template = $mustache->loadTemplate('teacher/index.mustache');
+    echo $template->render((compact('all_teachers')));

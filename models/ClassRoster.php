@@ -121,7 +121,7 @@ class ClassRoster
 	public function showClassesRosters()
 	{
 		try {
-			$sql = 'SELECT * FROM class_rosters';
+			$sql = 'SELECT * FROM classes_rosters';
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
 		} catch (Exception $e) {

@@ -6,9 +6,9 @@ use \PDO;
 class Student
 {
     public $id;
-	public $firstName;
-	public $lastName;
-	public $studentNumber;
+	public $first_name;
+	public $last_name;
+	public $student_number;
     public $email;
     public $contact;
     public $program;
@@ -16,11 +16,11 @@ class Student
 	// Database Connection Object
 	protected $connection;
 
-    public function __construct($firstName, $lastName, $studentNumber, $email, $contact, $program)
+    public function __construct($first_name, $last_name, $student_number, $email, $contact, $program)
 	{
-		$this->first_name = $firstName;
-        $this->last_name = $lastName;
-        $this->student_number = $studentNumber;
+		$this->first_name = $first_name;
+        $this->last_name = $last_name;
+        $this->student_number = $student_number;
         $this->email = $email;
         $this->contact = $contact;
         $this->program = $program;
@@ -72,7 +72,7 @@ class Student
 		try {
 			$sql = "INSERT INTO students SET first_name=:first_name, last_name=:last_name, student_number=:student_number, email=:email, contact=:contact, program=:program";
 			$statement = $this->connection->prepare($sql);
-			$statement->execute([
+			return $statement->execute([
 				':first_name' => $this->getFirstName(),
 				':last_name' => $this->getLastName(),
                 ':student_number' => $this->getStudentNumber(),
@@ -81,8 +81,6 @@ class Student
                 ':program' => $this->getProgram(),
 
 			]);
-			$this->id = $this->connection->getID();
-			return $this;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
@@ -113,26 +111,21 @@ class Student
 		}
 	}
 
-	public function update($firstName, $lastName, $studentNumber, $email, $contact, $program)
+	public function update($first_name, $last_name, $student_number, $email, $contact, $program)
 	{
 		try {
-			$sql = 'UPDATE students SET first_name=?, last_name=?,student_number=?, email=?, $contact=?, program=? WHERE id=?';
+			$sql = 'UPDATE students SET first_name=?, last_name=?,student_number=?, email=?, contact=?, program=? WHERE id=?';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
-				$firstName,
-				$lastName,
-                $studentNumber,
+				$first_name,
+				$last_name,
+                $student_number,
                 $email,
                 $contact,
                 $program,
 				$this->getID()
 			]);
-			$this->first_name = $firstName;
-			$this->last_name = $lastName;
-            $this->student_number = $studentNumber;
-            $this->email = $email;
-            $this->contact = $contact;
-            $this->program = $program;
+			
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

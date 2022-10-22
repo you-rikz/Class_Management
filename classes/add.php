@@ -2,15 +2,20 @@
 
 include ("../init.php");
 use Models\ClassRecord;
+use Models\Teacher;
 
-$template = $mustache->loadTemplate('classes/add.mustache');
-echo $template->render();
+$teacher= new Teacher('', '', '', '', '', '');
+$teacher->setConnection($connection);
+$all_teachers = $teacher->showAllTeachers();
+
+$template = $mustache->loadTemplate('classrecord/add.mustache');
+echo $template->render(compact('all_teachers'));
 
 try {
-	if (isset($_POST['classes_name'])) {
-		$addClassRecord = new Classes($_POST['classes_name'], $_POST['class_description'], $_POST['code'], $_POST['teacher_id']);
-		$addClassRecord->setConnection($connection);
-		$addClassRecord->addClassRecord();
+	if (isset($_POST['class_name'])) {
+		$addClass = new ClassRecord($_POST['class_name'], $_POST['code'], $_POST['class_description'], $_POST['teacher_id']);
+		$addClass->setConnection($connection);
+		$addClass->addClass();
 		echo "<script>window.location.href='index.php';</script>";
 		exit;
 	}

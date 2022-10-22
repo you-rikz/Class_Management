@@ -3,14 +3,14 @@
 include ("../init.php");
 use Models\Student;
 
-$template = $mustache->loadTemplate('students/add.mustache');
+$template = $mustache->loadTemplate('student/add.mustache');
 echo $template->render();
 
 try {
 	if (isset($_POST['first_name'])) {
-		$addClassRecord = new Classes($_POST['first_name'], $_POST['last_name'], $_POST['student_number'], $_POST['email'], $_POST['contact'], $_POST['program']);
-		$addClassRecord->setConnection($connection);
-		$addClassRecord->addClassRecord();
+		$addStudent = new Student($_POST['first_name'], $_POST['last_name'], $_POST['student_number'], $_POST['email'], $_POST['contact'], $_POST['program']);
+		$addStudent->setConnection($connection);
+		$addStudent->addStudent();
 		echo "<script>window.location.href='index.php';</script>";
 		exit;
 	}
