@@ -139,4 +139,18 @@ class ClassRecord
 		}
 	}
 
+	public function showClassesRosters($id){
+		try{
+			$sql = 'SELECT * FROM classes WHERE id=:id';
+			$statement = $this->connection-prepare($sql);
+			$statement->execute([
+				':id' => $id
+			]);
+			return $statement->fetch();
+		}catch (Exception $e) {
+			error_log($e->getMessage());
+	}
+
+}
+
 }

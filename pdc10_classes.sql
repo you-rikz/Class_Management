@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2022 at 05:08 PM
+-- Generation Time: Oct 24, 2022 at 07:46 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -35,6 +35,13 @@ CREATE TABLE `classes` (
   `teacher_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`id`, `class_name`, `code`, `class_description`, `teacher_id`) VALUES
+(19, 'Professional Domain Course 1', 'PDC10', 'dadadada', 23);
+
 -- --------------------------------------------------------
 
 --
@@ -42,6 +49,7 @@ CREATE TABLE `classes` (
 --
 
 CREATE TABLE `classes_rosters` (
+  `id` int(11) NOT NULL,
   `class_code` varchar(255) NOT NULL,
   `student_number` varchar(255) NOT NULL,
   `enrolled_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -79,6 +87,13 @@ CREATE TABLE `teachers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `first_name`, `last_name`, `email`, `contact`, `employee_number`) VALUES
+(23, 'Romack', 'Natividad', 'Romack.Natividad@gmail.com', '0488348', '20-285-666');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -88,16 +103,17 @@ CREATE TABLE `teachers` (
 ALTER TABLE `classes`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `code` (`code`),
-  ADD UNIQUE KEY `teacher_id` (`teacher_id`),
   ADD UNIQUE KEY `class_name` (`class_name`),
-  ADD UNIQUE KEY `code_2` (`code`);
+  ADD UNIQUE KEY `code_2` (`code`),
+  ADD KEY `teacher_id` (`teacher_id`);
 
 --
 -- Indexes for table `classes_rosters`
 --
 ALTER TABLE `classes_rosters`
-  ADD PRIMARY KEY (`class_code`),
-  ADD UNIQUE KEY `student_number` (`student_number`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_number` (`student_number`),
+  ADD UNIQUE KEY `class_code` (`class_code`);
 
 --
 -- Indexes for table `students`
@@ -121,7 +137,13 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `classes_rosters`
+--
+ALTER TABLE `classes_rosters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -133,7 +155,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables

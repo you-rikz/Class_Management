@@ -5,18 +5,18 @@ use \PDO;
 
 class ClassRoster
 {
-    protected $id;
-	protected $class_code;
-	protected $student_number;
-    protected $enrolled_at;
-	// Database Connection Object
-	protected $connection;
+    public $id;
+	public $class_code;
+	public $student_number;
 
-    public function __construct($class_code, $student_number, $enrolled_at)
+	// Database Connection Object
+	public $connection;
+
+    public function __construct($class_code, $student_number)
 	{
 		$this->class_code = $class_code;
         $this->student_number = $student_number;
-        $this->enrolled_at = $enrolled_at;
+        
     
 	}
 
@@ -35,35 +35,48 @@ class ClassRoster
 		return $this->student_number;
 	}
 
-    public function enrolledAt()
-	{
-		return $this->enrolled_at;
-	}
+    // public function enrolledAt()
+	// {
+	// 	return $this->enrolled_at;
+	// }
 
 	public function setConnection($connection)
 	{
 		$this->connection = $connection;
 	}
 
-	public function addClassRoster()
+	public function addStudentToRoster()
 	{
 		try {
-			$sql = "INSERT INTO class_rosters SET class_code=:class_code, student_number=:student_number, enrolled_at=:enrolled_at";
+			$sql = "INSERT INTO class_rosters SET class_code=:class_code, student_number=:student_number";
 			$statement = $this->connection->prepare($sql);
-			$statement->execute([
+
+			return $statement -> execute([
 				':class_code' => $this->getClassCode(),
 				':student_number' => $this->getStudentNumber(),
-                ':enrolled_at' => $this->enrolledAt(),
-                
 			]);
-			$this->id = $this->connection->getID();
-			return $this;
+			
+			// $this->id = $this->connection->getID();
+			// return $this;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
 
+	public function viewClasses($class_code)
+{
+	try{
+		$sql = 'SELECT * FROM classes_rosters JOIN students ON classes_rosters.student_number=students.student_number WHERE class_code:class_code';
+		$statement = $this->connection->prepare($sql);
+		$statement ->execute([ ':class_code' => $class_code	]);
+
+	return $statement ->fetchAll();
+
+	} catch (Exception $e) {
+		error_log($e->getMessage());
+	}
+}
 	public function getById($id)
 	{
 		try {
@@ -85,25 +98,25 @@ class ClassRoster
 		}
 	}
 
-	public function update($class_code, $student_number, $enrolled_at)
-	{
-		try {
-			$sql = 'UPDATE class_rosters SET class_code=?, student_number=?, enrolled_at=?, WHERE id=?';
-			$statement = $this->connection->prepare($sql);
-			$statement->execute([
-				$class_code,
-                $student_number,
-                $enrolled_at,
-				$this->getID()
-			]);
-			$this->class_code = $class_code;
-			$this->student_number = $student_number;
-            $this->enrolled_at = $enrolled_at;
+	// public function update($class_code, $student_number, $enrolled_at)
+	// {
+	// 	try {
+	// 		$sql = 'UPDATE class_rosters SET class_code=?, student_number=?, enrolled_at=?, WHERE id=?';
+	// 		$statement = $this->connection->prepare($sql);
+	// 		$statement->execute([
+	// 			$class_code,
+    //             $student_number,
+    //             $enrolled_at,
+	// 			$this->getID()
+	// 		]);
+	// 		$this->class_code = $class_code;
+	// 		$this->student_number = $student_number;
+    //         $this->enrolled_at = $enrolled_at;
             
-		} catch (Exception $e) {
-			error_log($e->getMessage());
-		}
-	}
+	// 	} catch (Exception $e) {
+	// 		error_log($e->getMessage());
+	// 	}
+	// }
 
 	public function delete()
 	{
@@ -118,10 +131,11 @@ class ClassRoster
 		}
 	}
 
-	public function showClassesRosters()
+	public function showClassRosters()
 	{
 		try {
-			$sql = 'SELECT * FROM classes_rosters';
+			$sql = 'SELECT classes.id, classes.name, classes.description, class.code, teachers.firstname, teachers.last_name(SELECT COUNT(student_number) FROM classes_rosters
+			WHERE classes_rosters.class_code=classes.code) AS enrolled_students FROM classes JOIN teachers ON classes.teacher_id = teachers.employee_number';
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
 		} catch (Exception $e) {
