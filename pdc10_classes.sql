@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2022 at 07:46 PM
+-- Generation Time: Oct 25, 2022 at 06:44 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -32,7 +32,7 @@ CREATE TABLE `classes` (
   `class_name` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
   `class_description` varchar(255) NOT NULL,
-  `teacher_id` int(11) NOT NULL
+  `teacher_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `class_name`, `code`, `class_description`, `teacher_id`) VALUES
-(19, 'Professional Domain Course 1', 'PDC10', 'dadadada', 23);
+(26, 'Professional Domain Course 1', 'PDC10', 'This subject is more on front-end design', '10-2-2');
 
 -- --------------------------------------------------------
 
@@ -54,6 +54,13 @@ CREATE TABLE `classes_rosters` (
   `student_number` varchar(255) NOT NULL,
   `enrolled_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `classes_rosters`
+--
+
+INSERT INTO `classes_rosters` (`id`, `class_code`, `student_number`, `enrolled_at`) VALUES
+(3, 'PDC10', '20-0813-704', '2022-10-25 14:48:31');
 
 -- --------------------------------------------------------
 
@@ -70,6 +77,13 @@ CREATE TABLE `students` (
   `contact` varchar(255) NOT NULL,
   `program` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `first_name`, `last_name`, `student_number`, `email`, `contact`, `program`) VALUES
+(73, 'Arnold Nicholas', 'Lim', '20-0813-704', 'lim.arnoldnicholas@auf.edu.ph', '09269744874', 'CCS');
 
 -- --------------------------------------------------------
 
@@ -91,7 +105,7 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `first_name`, `last_name`, `email`, `contact`, `employee_number`) VALUES
-(23, 'Romack', 'Natividad', 'Romack.Natividad@gmail.com', '0488348', '20-285-666');
+(25, 'Romack', 'Natividad', 'Romack.Natividad@gmail.com', '099999999', '10-2-2');
 
 --
 -- Indexes for dumped tables
@@ -102,32 +116,31 @@ INSERT INTO `teachers` (`id`, `first_name`, `last_name`, `email`, `contact`, `em
 --
 ALTER TABLE `classes`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `code` (`code`),
-  ADD UNIQUE KEY `class_name` (`class_name`),
-  ADD UNIQUE KEY `code_2` (`code`),
-  ADD KEY `teacher_id` (`teacher_id`);
+  ADD KEY `teacher_id` (`teacher_id`),
+  ADD KEY `code` (`code`);
 
 --
 -- Indexes for table `classes_rosters`
 --
 ALTER TABLE `classes_rosters`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `student_number` (`student_number`),
-  ADD UNIQUE KEY `class_code` (`class_code`);
+  ADD KEY `student_number` (`student_number`),
+  ADD KEY `class_code` (`class_code`);
 
 --
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `student_number` (`student_number`,`email`,`contact`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `student_number` (`student_number`);
 
 --
 -- Indexes for table `teachers`
 --
 ALTER TABLE `teachers`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`,`contact`,`employee_number`);
+  ADD KEY `employee_number` (`employee_number`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -137,25 +150,25 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `classes_rosters`
 --
 ALTER TABLE `classes_rosters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables
@@ -165,7 +178,7 @@ ALTER TABLE `teachers`
 -- Constraints for table `classes`
 --
 ALTER TABLE `classes`
-  ADD CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`);
+  ADD CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`employee_number`);
 
 --
 -- Constraints for table `classes_rosters`
