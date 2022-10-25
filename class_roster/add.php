@@ -2,7 +2,7 @@
 
 include ("../init.php");
 use Models\ClassRoster;
-use Models\Classes;
+use Models\ClassRecord;
 use Models\Student;
 
 
@@ -11,6 +11,7 @@ $id = $_GET['id'];
 $classes = new ClassRecord('','','','','','');
 	$classes->setConnection($connection);
 	$classes->getById($id);
+	$class_code= $classes -> getClassCode();
 	$all_classes = $classes->showClassesRosters($id);
 
 	$student= new Student('', '', '', '', '', '');
@@ -27,21 +28,9 @@ $classes = new ClassRecord('','','','','','');
 
 
  $template = $mustache->loadTemplate('classroster/add.mustache');
- echo $template->render(compact('all_classes', 'all_students'));
+ echo $template->render(compact('all_classes', 'all_students', 'class_code'));
 
-try {
-	if (isset($_POST['class_code'])) {
-		$rosters = new ClassRoster($_POST['class_code'], $_POST['student_number']);
-		$rosters->setConnection($connection);
-		$rosters->addStudentRoster();
-		echo "<script>window.location.href='index.php?';</script>";
-		exit();
-	}
-}
 
-catch (Exception $e) {
-	error_log($e->getMessage());
-}
 
 
 

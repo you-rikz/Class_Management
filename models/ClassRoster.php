@@ -48,7 +48,7 @@ class ClassRoster
 	public function addStudentToRoster()
 	{
 		try {
-			$sql = "INSERT INTO class_rosters SET class_code=:class_code, student_number=:student_number";
+			$sql = "INSERT INTO classes_rosters SET class_code=:class_code, student_number=:student_number";
 			$statement = $this->connection->prepare($sql);
 
 			return $statement -> execute([
@@ -67,7 +67,7 @@ class ClassRoster
 	public function viewClasses($class_code)
 {
 	try{
-		$sql = 'SELECT * FROM classes_rosters JOIN students ON classes_rosters.student_number=students.student_number WHERE class_code:class_code';
+		$sql = 'SELECT * FROM classes_rosters JOIN students ON classes_rosters.student_number=students.student_number WHERE classes_rosters.class_code=:class_code';
 		$statement = $this->connection->prepare($sql);
 		$statement ->execute([ ':class_code' => $class_code	]);
 
@@ -80,7 +80,7 @@ class ClassRoster
 	public function getById($id)
 	{
 		try {
-			$sql = 'SELECT * FROM class_rosters WHERE id=:id';
+			$sql = 'SELECT * FROM classes_rosters WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				':id' => $id
@@ -121,7 +121,7 @@ class ClassRoster
 	public function delete()
 	{
 		try {
-			$sql = 'DELETE FROM class_rosters WHERE id=?';
+			$sql = 'DELETE FROM classes_rosters WHERE id=?';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				$this->getId()
@@ -134,8 +134,8 @@ class ClassRoster
 	public function showClassRosters()
 	{
 		try {
-			$sql = 'SELECT classes.id, classes.name, classes.description, class.code, teachers.firstname, teachers.last_name(SELECT COUNT(student_number) FROM classes_rosters
-			WHERE classes_rosters.class_code=classes.code) AS enrolled_students FROM classes JOIN teachers ON classes.teacher_id = teachers.employee_number';
+			$sql = 'SELECT classes.id, classes.class_name, classes.class_description, classes.code, teachers.first_name, teachers.last_name, (SELECT COUNT(student_number) FROM classes_rosters
+			WHERE classes_rosters.class_code = classes.code) AS enrolled_students FROM classes INNER JOIN teachers on classes.teacher_id=teachers.employee_number;';
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
 		} catch (Exception $e) {

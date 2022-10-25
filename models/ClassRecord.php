@@ -131,7 +131,7 @@ class ClassRecord
 	public function showAllClasses()
 	{
 		try {
-			$sql = 'SELECT classes.id, classes.class_name, classes.code, classes.class_description, teachers.first_name, teachers.last_name FROM classes JOIN teachers ON classes.teacher_id=teachers.id';
+			$sql = 'SELECT classes.id, classes.class_name, classes.code, classes.class_description, teachers.first_name, teachers.last_name FROM classes JOIN teachers ON classes.teacher_id=teachers.employee_number';
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
 		} catch (Exception $e) {
@@ -142,7 +142,7 @@ class ClassRecord
 	public function showClassesRosters($id){
 		try{
 			$sql = 'SELECT * FROM classes WHERE id=:id';
-			$statement = $this->connection-prepare($sql);
+			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				':id' => $id
 			]);

@@ -2,7 +2,8 @@
 
 include ("../init.php");
 use Models\ClassRoster;
-use Models\Classes;
+use Models\ClassRecord;
+
 
     $id = $_GET['id'];
 
@@ -10,13 +11,12 @@ use Models\Classes;
     $classes = new ClassRecord('','','','','','');
     $classes ->setConnection($connection);
     $classes->getById($id);
-    $code = $classes -> getClassCode();
+    $class_code = $classes -> getClassCode();
     $all_classes =$classes ->showClassesRosters($id);
 
-
-    
     $rosters= new ClassRoster('', '', '', '', '', '');
     $rosters->setConnection($connection);
+    $all_rosters =$rosters ->showClassRosters($id);
 
     $all_rosters=$rosters -> viewClasses($class_code);
     $template = $mustache->loadTemplate('classroster/view.mustache');
