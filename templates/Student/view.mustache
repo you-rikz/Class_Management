@@ -5,33 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Class Roster Document</title>
+    <title>View Students</title>
     <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-
-    <script>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-            function exportToExcel(tableID, filename = ''){
-                var downloadLink;
-                var dataType = 'application/vnd.ms-excel';
-                var tableSelect = document.getElementById(tableID);
-                var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-                filename = filename?filename+'.xls':'excel_data.xls';
-                downloadLink = document.createElement("a");
-                document.body.appendChild(downloadLink);
-                if(navigator.msSaveOrOpenBlob){
-                    var blob = new Blob(['\ufeff', tableHTML], {
-                        type: dataType
-                    });
-                    navigator.msSaveOrOpenBlob( blob, filename);
-                }else{
-                    downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-                    downloadLink.download = filename;
-                    downloadLink.click();
-                }
-            }
-</script>
 </head>
 <body>
 
@@ -67,44 +42,32 @@
     <div class="main-panel">
         <div class="content-wrapper pb-0">
           <div class="page-header flex-wrap">
-            <h3 class="mb-0" style="margin-left:20px"> View Roster
+            <h3 class="mb-0" style="margin-left:20px"> View Student
             </h3>
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
-            <div class="d-flex">
-                <a type="button" style="width: 100px; font-size: 12px" class="btn btn-sm ml-3 btn-success" a href="../class_roster/add.php?id={{id}}"> Add Students </a>
-                <a type="button" style="width: 100px; font-size: 12px "  onclick = "exportToExcel('roster_table','{{class_code}} _student_roster') class="btn btn-sm ml-3 btn-primary" > Export </a>
-
-              </div>
-              
             <div class="card-body">
-                <h4 class="card-title">All Students</h4>
+                <h4 class="card-title">{{first_name}} {{last_name}}</h4>
     <div class="table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Student Number</th>
-            <th scope="col">Program</th>
-            <th scope="col">Action</th>
+            <th scope="col">Class Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Class Code</th>
           </tr>
         </thead>
-        {{# all_rosters}}
+        {{# all_students}}
         <tbody>
           <tr>
             <th scope="row">{{id}}</th>
-            <td>{{ first_name }}</td>
-            <td>{{ last_name }}</td>
-            <td>{{  student_number  }}</td>
-            <td>{{ program }}</td>
-            <td width="20%">
-                <a href="../class_roster/delete.php?id={{id}}" class="btn btn-danger"  style="width: 100px">Remove</a>
-            </td>
+            <td>{{ class_name }}</td>
+            <td>{{ class_description }}</td>
+            <td>{{  code  }}</td>
           </tr>
         </tbody>
-        {{/ all_rosters}}
+        {{/ all_students}}
       </table>
     </div>
  </div>

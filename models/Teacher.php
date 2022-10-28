@@ -145,4 +145,18 @@ class Teacher
 		}
 	}
 
+	public function viewClasses($id)
+{
+	try{
+		$sql = 'SELECT * FROM teachers JOIN classes ON teachers.employee_number=classes.teacher_id WHERE teachers.id=:id';
+		$statement = $this->connection->prepare($sql);
+		$statement ->execute([ ':id' => $id	]);
+
+	return $statement ->fetchAll();
+
+	} catch (Exception $e) {
+		error_log($e->getMessage());
+	}
+}
+
 }
